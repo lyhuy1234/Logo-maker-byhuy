@@ -1,552 +1,724 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-en="Website" data-km="គេហទំព័រ">Website</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter font from Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Base styles, apply Inter font */
-        body {
-            font-family: 'Inter', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        /* Light Theme (default) */
-        body.light-theme {
-            background-color: #f0f2f5; /* Light gray background */
-            color: #333; /* Dark text */
-        }
-        /* Dark Theme */
-        body.dark-theme {
-            background-color: #1a1a1a; /* Dark gray background */
-            color: #f0f2f5; /* Light text */
-        }
-        .card {
-            background-color: #ffffff; /* White background for cards in light theme */
-            border-radius: 20px; /* iOS-like rounded corners */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Subtle shadow */
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-        body.dark-theme .card {
-            background-color: #2c2c2c; /* Darker background for cards in dark theme */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Deeper shadow for contrast */
-        }
-        input[type="text"], input[type="file"], textarea, select {
-            background-color: #f5f5f5;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 10px 15px;
-            color: #333;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-        body.dark-theme input[type="text"],
-        body.dark-theme input[type="file"],
-        body.dark-theme textarea,
-        body.dark-theme select {
-            background-color: #3a3a3a;
-            border-color: #555;
-            color: #f0f2f5;
-        }
-        input[type="text"]:focus, textarea:focus {
-            outline: none;
-            border-color: #007aff; /* iOS blue accent */
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
-        }
-        .btn {
-            padding: 12px 25px;
-            border-radius: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-        .btn-primary {
-            background-color: #007aff; /* iOS blue */
-            color: #ffffff;
-        }
-        .btn-primary:hover {
-            background-color: #005bb5;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0, 122, 255, 0.3);
-        }
-        .btn-secondary {
-            background-color: #e0e0e0;
-            color: #333;
-        }
-        body.dark-theme .btn-secondary {
-            background-color: #555;
-            color: #f0f2f5;
-        }
-        .btn-secondary:hover {
-            background-color: #c0c0c0;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        body.dark-theme .btn-secondary:hover {
-            background-color: #6a6a6a;
-        }
-        /* Custom file input styling */
-        .custom-file-input {
-            display: block;
-            width: 100%;
-            cursor: pointer;
-            padding: 10px 15px;
-            border-radius: 12px;
-            border: 1px dashed #a0a0a0;
-            text-align: center;
-            color: #555;
-            transition: border-color 0.3s, background-color 0.3s;
-        }
-        .custom-file-input:hover {
-            border-color: #007aff;
-            background-color: #e6f2ff;
-        }
-        body.dark-theme .custom-file-input {
-            border: 1px dashed #777;
-            color: #ccc;
-        }
-        body.dark-theme .custom-file-input:hover {
-            border-color: #007aff;
-            background-color: #3a3a3a;
-        }
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>AI Business Logo Generator</title>
+   <!-- Bootstrap 5 CSS -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+   <!-- Google Fonts - Inter (Close to Apple's San Francisco) -->
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+   <!-- Font Awesome for icons -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <style>
+       /* Apple-inspired Color Palette and Variables */
+       :root {
+           --apple-blue: #007aff; /* System Blue */
+           --apple-green: #34c759; /* System Green */
+           --apple-red: #ff3b30; /* System Red for alerts */
+           --apple-gray-1: #8e8e93; /* Lighter Gray for text */
+           --apple-gray-2: #636366; /* Darker Gray for text */
 
-        .radio-group input[type="radio"] {
-            display: none; /* Hide default radio button */
-        }
-        .radio-group label {
-            padding: 10px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            background-color: #e0e0e0; /* Light background for unselected */
-            color: #555;
-            transition: all 0.3s;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-        body.dark-theme .radio-group label {
-            background-color: #444;
-            color: #ccc;
-        }
-        .radio-group input[type="radio"]:checked + label {
-            background-color: #007aff; /* iOS blue for selected */
-            color: #ffffff;
-            box-shadow: 0 2px 6px rgba(0, 122, 255, 0.3);
-        }
-        .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            z-index: 1000;
-            display: none; /* Hidden by default */
-            text-align: center;
-        }
-        .message-box.show {
-            display: block;
-        }
+           /* Light Theme */
+           --light-bg-primary: #f2f2f7; /* Very light background */
+           --light-bg-secondary: #ffffff; /* Card/component background */
+           --light-text-primary: #1c1c1e; /* Dark text */
+           --light-text-secondary: #636366; /* Secondary text */
+           --light-border: #e0e0e0; /* Light borders */
+           --light-shadow-color: rgba(0, 0, 0, 0.08); /* Subtle shadow */
+           --light-input-border-focus: #b5d5ff; /* Light blue focus border */
+       }
 
-        /* Loading spinner */
-        .loader {
-            border: 4px solid #f3f3f3; /* Light grey */
-            border-top: 4px solid #007aff; /* Blue */
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
+       /* Dark Theme */
+       [data-bs-theme="dark"] {
+           --light-bg-primary: #1c1c1e; /* Dark background */
+           --light-bg-secondary: #2c2c2e; /* Card/component background */
+           --light-text-primary: #ffffff; /* White text */
+           --light-text-secondary: #aeaeb2; /* Secondary text */
+           --light-border: #48484a; /* Dark borders */
+           --light-shadow-color: rgba(0, 0, 0, 0.3); /* Darker shadow */
+           --light-input-border-focus: #004d99; /* Darker blue focus border */
+       }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+       body {
+           font-family: 'Inter', sans-serif;
+           background-color: var(--light-bg-primary);
+           color: var(--light-text-primary);
+           transition: background-color 0.3s ease, color 0.3s ease;
+           line-height: 1.6;
+       }
+
+       /* General Container & Card Styling */
+       .container {
+           max-width: 960px; /* Slightly wider for modern feel */
+       }
+
+       .card {
+           border-radius: 1.5rem; /* More rounded */
+           box-shadow: 0 6px 16px var(--light-shadow-color); /* More pronounced but soft shadow */
+           background-color: var(--light-bg-secondary);
+           color: var(--light-text-primary);
+           border: none; /* Remove default bootstrap border */
+           transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+       }
+
+       /* Navbar Styling */
+       .navbar {
+           background-color: var(--light-bg-secondary);
+           border-bottom: 1px solid var(--light-border);
+           box-shadow: 0 2px 4px var(--light-shadow-color);
+           transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+           border-radius: 0 0 1.5rem 1.5rem; /* Rounded bottom corners */
+       }
+
+       .navbar-brand {
+           font-weight: 600; /* Semi-bold for brand name */
+           color: var(--light-text-primary) !important; /* Ensure color override */
+       }
+
+       .navbar-brand .fas {
+           color: var(--apple-blue); /* Accent color for icon */
+       }
+
+       /* Form Elements */
+       .form-control, .form-select, .form-control:focus, .form-select:focus {
+           background-color: var(--light-bg-primary);
+           color: var(--light-text-primary);
+           border: 1px solid var(--light-border);
+           border-radius: 0.75rem; /* Slightly more rounded inputs */
+           padding: 0.8rem 1rem; /* More padding */
+           transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+       }
+       .form-control::placeholder {
+           color: var(--apple-gray-1); /* Lighter placeholder text */
+           opacity: 0.8;
+       }
+       .form-control:focus {
+           border-color: var(--apple-blue);
+           box-shadow: 0 0 0 4px var(--light-input-border-focus); /* Subtle blue glow on focus */
+           background-color: var(--light-bg-secondary); /* Background might change slightly on focus */
+       }
+       .form-label {
+           font-weight: 500; /* Medium weight for labels */
+           color: var(--light-text-primary);
+           margin-bottom: 0.5rem;
+       }
+
+       /* Buttons */
+       .btn {
+           border-radius: 0.75rem; /* Consistently rounded */
+           padding: 0.75rem 1.25rem; /* Generous padding */
+           font-weight: 500;
+           transition: all 0.2s ease;
+       }
+
+       .btn-primary {
+           background-color: var(--apple-blue);
+           border-color: var(--apple-blue);
+           color: white;
+           box-shadow: 0 2px 6px rgba(0, 122, 255, 0.3); /* Subtle blue shadow */
+       }
+       .btn-primary:hover {
+           background-color: #006ee6; /* Slightly darker blue */
+           border-color: #006ee6;
+           box-shadow: 0 4px 10px rgba(0, 122, 255, 0.4);
+           transform: translateY(-1px); /* Slight lift */
+       }
+       .btn-primary:active {
+           background-color: #005bb7;
+           border-color: #005bb7;
+           box-shadow: none;
+           transform: translateY(0);
+       }
+
+       .btn-success {
+           background-color: var(--apple-green);
+           border-color: var(--apple-green);
+           color: white;
+           box-shadow: 0 2px 6px rgba(52, 199, 89, 0.3);
+       }
+       .btn-success:hover {
+           background-color: #2da44e;
+           border-color: #2da44e;
+           box-shadow: 0 4px 10px rgba(52, 199, 89, 0.4);
+           transform: translateY(-1px);
+       }
+       .btn-success:active {
+           background-color: #258f44;
+           border-color: #258f44;
+           box-shadow: none;
+           transform: translateY(0);
+       }
+
+       .btn-outline-secondary {
+           border: 1px solid var(--light-border);
+           color: var(--light-text-primary);
+           background-color: transparent;
+           border-radius: 0.75rem; /* Ensure rounded corners */
+       }
+       .btn-outline-secondary:hover {
+           background-color: var(--light-bg-primary); /* Subtle background change on hover */
+           border-color: var(--apple-blue);
+           color: var(--apple-blue);
+       }
+       .btn-outline-secondary:focus, .btn-outline-secondary.active {
+           box-shadow: 0 0 0 4px var(--light-input-border-focus);
+           border-color: var(--apple-blue);
+           color: var(--apple-blue);
+           background-color: var(--light-bg-primary);
+       }
+
+       /* Dropdown */
+       .dropdown-menu {
+           border-radius: 0.75rem;
+           box-shadow: 0 6px 16px var(--light-shadow-color);
+           background-color: var(--light-bg-secondary);
+           border: 1px solid var(--light-border);
+           padding: 0.5rem;
+       }
+       .dropdown-item {
+           color: var(--light-text-primary);
+           padding: 0.6rem 1rem;
+           border-radius: 0.5rem;
+           transition: background-color 0.2s ease, color 0.2s ease;
+       }
+       .dropdown-item:hover, .dropdown-item:active, .dropdown-item:focus {
+           background-color: var(--light-bg-primary);
+           color: var(--apple-blue);
+       }
+
+       /* Logo Preview */
+       .logo-preview {
+           border: 1px dashed var(--light-border); /* Subtle dashed border */
+           border-radius: 1rem;
+           min-height: 280px; /* Slightly taller */
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           background-color: var(--light-bg-primary); /* Lighter background */
+           overflow: hidden;
+           position: relative;
+           box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Inner shadow for depth */
+           transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+       }
+       .logo-preview img {
+           max-width: 90%; /* Give some padding */
+           max-height: 90%;
+           object-fit: contain;
+           border-radius: 0.5rem;
+           transition: opacity 0.3s ease;
+       }
+
+       /* Image Upload Wrapper */
+       .image-upload-wrapper {
+           position: relative;
+           height: 160px;
+           border: 1px dashed var(--light-border);
+           border-radius: 0.75rem;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           justify-content: center;
+           cursor: pointer;
+           overflow: hidden;
+           background-color: var(--light-bg-primary);
+           transition: border-color 0.2s ease, background-color 0.3s ease;
+           padding: 1rem;
+           text-align: center;
+       }
+       .image-upload-wrapper:hover {
+           border-color: var(--apple-blue);
+           background-color: var(--light-bg-secondary);
+       }
+       .image-upload-wrapper input[type="file"] {
+           position: absolute;
+           width: 100%;
+           height: 100%;
+           opacity: 0;
+           cursor: pointer;
+           z-index: 10; /* Ensure it's clickable */
+       }
+       .image-upload-wrapper img {
+           max-width: 100%;
+           max-height: 100%;
+           object-fit: contain;
+           border-radius: 0.5rem;
+       }
+       .image-upload-wrapper .placeholder-text {
+           color: var(--apple-gray-1);
+           font-size: 0.9rem;
+           line-height: 1.4;
+       }
+       .image-upload-wrapper .placeholder-text .fas {
+           font-size: 1.8rem;
+           color: var(--apple-blue);
+           margin-bottom: 0.5rem;
+       }
+
+       /* Loading Overlay */
+       .loading-overlay {
+           position: absolute;
+           top: 0;
+           left: 0;
+           right: 0;
+           bottom: 0;
+           background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           z-index: 10; /* Above logo, below alerts */
+           border-radius: 1rem;
+           opacity: 0;
+           visibility: hidden;
+           transition: opacity 0.3s ease, visibility 0.3s ease;
+       }
+       .loading-overlay.active {
+           opacity: 1;
+           visibility: visible;
+       }
+       .spinner-border {
+           width: 3rem;
+           height: 3rem;
+           color: white !important; /* Ensure white spinner */
+       }
+
+       /* Custom Alert */
+       .alert-custom {
+           position: fixed;
+           top: 1.5rem;
+           left: 50%;
+           transform: translateX(-50%);
+           z-index: 1100;
+           min-width: 320px;
+           max-width: 90%;
+           text-align: center;
+           border-radius: 0.75rem;
+           padding: 0.8rem 1.5rem;
+           font-weight: 500;
+           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+           opacity: 0;
+           transition: opacity 0.3s ease, top 0.3s ease;
+       }
+       .alert-custom.show {
+           opacity: 1;
+           top: 1.5rem; /* Final position */
+       }
+       .alert-custom.alert-info {
+           background-color: var(--apple-blue);
+           color: white;
+           border: 1px solid var(--apple-blue);
+       }
+       .alert-custom.alert-success {
+           background-color: var(--apple-green);
+           color: white;
+           border: 1px solid var(--apple-green);
+       }
+       .alert-custom.alert-danger {
+           background-color: var(--apple-red);
+           color: white;
+           border: 1px solid var(--apple-red);
+       }
+       .alert-custom.alert-warning {
+           background-color: #ffcc00; /* System Yellow */
+           color: var(--light-text-primary); /* Dark text on yellow */
+           border: 1px solid #ffcc00;
+       }
+
+       /* Spacing adjustments */
+       .mb-3 { margin-bottom: 1.25rem !important; }
+       .mb-4 { margin-bottom: 1.75rem !important; }
+       .mt-3 { margin-top: 1.25rem !important; }
+       .py-3 { padding-top: 1rem !important; padding-bottom: 1rem !important; } /* Make buttons feel substantial */
+       .py-2 { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+
+       /* Responsive adjustments */
+       @media (max-width: 767.98px) {
+           .card {
+               padding: 1.5rem !important;
+           }
+           .navbar {
+               border-radius: 0; /* No rounded bottom on mobile */
+           }
+       }
+   </style>
 </head>
-<body class="light-theme">
-    <div class="message-box" id="messageBox"></div>
+<body>
+   <div id="custom-alert-container"></div>
 
-    <!-- Header -->
-    <header class="w-full py-4 px-6 flex flex-col sm:flex-row items-center justify-between card shadow-md z-10">
-        <h1 class="text-3xl font-bold mb-4 sm:mb-0" data-en="Website" data-km="គេហទំព័រ">Website</h1>
-        <div class="flex items-center space-x-4">
-            <!-- Language Switch -->
-            <div class="relative inline-block text-left">
-                <select id="languageSwitch" class="appearance-none bg-e0e0e0 dark:bg-444 text-555 dark:text-ccc px-4 py-2 rounded-lg cursor-pointer text-sm font-medium">
-                    <option value="en">English</option>
-                    <option value="km">ខ្មែរ</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                </div>
-            </div>
-            <!-- Theme Switch -->
-            <button id="themeSwitch" class="p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <!-- Sun icon for light mode -->
-                <svg id="sunIcon" class="w-6 h-6 text-yellow-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                    <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 6a1 1 0 11-2 0 1 1 0 012 0zm-4 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm5.324-9.324a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM4.686 15.314a1 1 0 010-1.414l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414 0zm0-10.628a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zm10.628 0a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM10 15a5 5 0 100-10 5 5 0 000 10zm0-2a3 3 0 110-6 3 3 0 010 6z" clip-rule="evenodd"></path>
-                </svg>
-                <!-- Moon icon for dark mode -->
-                <svg id="moonIcon" class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                </svg>
-            </button>
-        </div>
-    </header>
+   <nav class="navbar navbar-expand-lg">
+       <div class="container-fluid container">
+           <a class="navbar-brand d-flex align-items-center" href="#">
+               <i class="fas fa-building me-2"></i> <span data-i18n="appName">AI Business Logo Generator</span>
+           </a>
+           <div class="d-flex">
+               <button class="btn btn-outline-secondary me-2 rounded-pill" id="theme-toggle">
+                   <i class="fas fa-sun" id="theme-icon"></i>
+               </button>
+               <div class="dropdown">
+                   <button class="btn btn-outline-secondary dropdown-toggle rounded-pill" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                       <span id="current-language-text">EN</span>
+                   </button>
+                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+                       <li><a class="dropdown-item" href="#" data-lang="en">English</a></li>
+                       <li><a class="dropdown-item" href="#" data-lang="km">ខ្មែរ</a></li>
+                   </ul>
+               </div>
+           </div>
+       </div>
+   </nav>
 
-    <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-8">
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Left Panel: Logo Input -->
-            <div class="card p-6 md:p-8 flex flex-col space-y-6">
-                <h2 class="text-2xl font-semibold mb-4" data-en="Design Your Logo" data-km="រចនារូបសញ្ញារបស់អ្នក">Design Your Logo</h2>
+   <div class="container my-4">
+       <div class="card p-4 position-relative">
+           <h2 class="card-title text-center mb-4" data-i18n="generateYourLogo">Generate Your Business Logo</h2>
+           <div class="row g-4">
+               <div class="col-lg-6">
+                   <div class="mb-3">
+                       <label for="companyName" class="form-label" data-i18n="companyNameLabel">Business Name:</label>
+                       <input type="text" class="form-control" id="companyName" placeholder="e.g., Global Innovations Corp">
+                   </div>
+                   <div class="mb-3">
+                       <label for="designCharacters" class="form-label" data-i18n="designCharactersLabel">Core Concept / Design Elements:</label>
+                       <input type="text" class="form-control" id="designCharacters" placeholder="e.g., growth, interconnected, abstract, globe, leaf">
+                   </div>
+                   <div class="mb-3">
+                       <label for="tagline" class="form-label" data-i18n="taglineLabel">Tagline / Slogan (Optional):</label>
+                       <textarea class="form-control" id="tagline" rows="2" placeholder="e.g., Empowering Tomorrow's Solutions"></textarea>
+                   </div>
+                   <div class="mb-3">
+                       <label for="loremIpsum" class="form-label" data-i18n="loremIpsumLabel">Business Description / Specific Requirements:</label>
+                       <textarea class="form-control" id="loremIpsum" rows="4" placeholder="e.g., Describe your industry, target audience, brand values, or any specific visual elements (e.g., 'tech company focusing on sustainable energy', 'luxury brand with a modern, clean aesthetic')."></textarea>
+                   </div>
+                   <div class="mb-3">
+                       <label for="imageUpload" class="form-label" data-i18n="imageRefLabel">Upload Reference Image (Optional):</label>
+                       <div class="image-upload-wrapper">
+                           <input type="file" id="imageUpload" accept="image/*">
+                           <img id="imagePreview" src="#" alt="Image Preview" style="display:none;">
+                           <span class="placeholder-text" id="imageUploadPlaceholder">
+                               <i class="fas fa-upload d-block mb-2"></i> <span data-i18n="clickOrDrag">Click or drag an image here</span>
+                           </span>
+                       </div>
+                   </div>
+                   <button type="button" class="btn btn-primary w-100 py-3 mt-3" id="generateLogoBtn" data-i18n="generateLogoBtn">
+                       Generate Business Logo
+                   </button>
+               </div>
+               <div class="col-lg-6 d-flex flex-column">
+                   <label class="form-label" data-i18n="generatedLogoLabel">Generated Logo:</label>
+                   <div class="logo-preview flex-grow-1 position-relative">
+                       <img id="generatedLogo" src="https://placehold.co/400x250/e0e0e0/555555?text=Your+Logo+Here" alt="Generated Logo Placeholder">
+                       <div class="loading-overlay" id="loadingSpinner">
+                           <div class="spinner-border" role="status">
+                               <span class="visually-hidden">Loading...</span>
+                           </div>
+                       </div>
+                   </div>
+                   <button type="button" class="btn btn-success w-100 py-2 mt-3" id="downloadLogoBtn" data-i18n="downloadLogoBtn" disabled>
+                       Download Logo
+                   </button>
+               </div>
+           </div>
+       </div>
+   </div>
 
-                <!-- Company Name Input -->
-                <div>
-                    <label for="companyName" class="block text-lg font-medium mb-2" data-en="Company Name" data-km="ឈ្មោះក្រុមហ៊ុន">Company Name</label>
-                    <input type="text" id="companyName" class="w-full" placeholder="e.g., Acme Corp" data-en-placeholder="e.g., Acme Corp" data-km-placeholder="ឧ. ក្រុមហ៊ុនអាខេមី">
-                </div>
+   <!-- Bootstrap 5 JS -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7bQ8A+Y3b8hM9aU1" crossorigin="anonymous"></script>
+   <script>
+       // Custom Alert Function
+       function showAlert(message, type = 'info', duration = 3000) {
+           const container = document.getElementById('custom-alert-container');
+           const alertDiv = document.createElement('div');
+           alertDiv.className = `alert alert-${type} alert-custom`;
+           alertDiv.role = 'alert';
+           alertDiv.innerText = message;
+           container.appendChild(alertDiv);
 
-                <!-- Tagline Input -->
-                <div>
-                    <label for="tagline" class="block text-lg font-medium mb-2" data-en="Tagline (optional)" data-km="ពាក្យស្លោក (ស្រេចចិត្ត)">Tagline (optional)</label>
-                    <input type="text" id="tagline" class="w-full" placeholder="e.g., Innovating for a brighter future" data-en-placeholder="e.g., Innovating for a brighter future" data-km-placeholder="ឧ. ច្នៃប្រឌិតសម្រាប់អនាគតដ៏ភ្លឺស្វាង">
-                </div>
+           // Trigger reflow to enable CSS transition
+           void alertDiv.offsetWidth;
+           alertDiv.classList.add('show');
 
-                <!-- Logo Base Selection -->
-                <div>
-                    <label class="block text-lg font-medium mb-3" data-en="Logo Base" data-km="មូលដ្ឋានរូបសញ្ញា">Logo Base</label>
-                    <div class="flex space-x-4 radio-group">
-                        <input type="radio" id="baseText" name="logoBaseType" value="text" checked>
-                        <label for="baseText" class="flex-1 text-center" data-en="Text Description" data-km="ការពិពណ៌នាអត្ថបទ">Text Description</label>
+           setTimeout(() => {
+               alertDiv.classList.remove('show');
+               alertDiv.addEventListener('transitionend', () => alertDiv.remove(), { once: true });
+           }, duration);
+       }
 
-                        <input type="radio" id="baseImage" name="logoBaseType" value="image">
-                        <label for="baseImage" class="flex-1 text-center" data-en="Upload Image" data-km="ផ្ទុករូបភាព">Upload Image</label>
-                    </div>
-                </div>
+       const companyNameInput = document.getElementById('companyName');
+       const designCharactersInput = document.getElementById('designCharacters');
+       const taglineInput = document.getElementById('tagline');
+       const loremIpsumInput = document.getElementById('loremIpsum');
+       const imageUploadInput = document.getElementById('imageUpload');
+       const imagePreview = document.getElementById('imagePreview');
+       const imageUploadPlaceholder = document.getElementById('imageUploadPlaceholder');
+       const generateLogoBtn = document.getElementById('generateLogoBtn');
+       const generatedLogo = document.getElementById('generatedLogo');
+       const loadingSpinner = document.getElementById('loadingSpinner');
+       const downloadLogoBtn = document.getElementById('downloadLogoBtn');
+       const themeToggleBtn = document.getElementById('theme-toggle');
+       const themeIcon = document.getElementById('theme-icon');
+       const languageDropdown = document.getElementById('languageDropdown');
+       const currentLanguageText = document.getElementById('current-language-text');
+       const htmlElement = document.documentElement;
 
-                <!-- Conditional Input for Logo Base -->
-                <div id="textInputContainer">
-                    <label for="logoDescription" class="block text-lg font-medium mb-2" data-en="Describe your logo (e.g., style, colors, elements)" data-km="ពិពណ៌នារូបសញ្ញារបស់អ្នក (ឧ. រចនាប័ទ្ម ពណ៌ ធាតុ)">Describe your logo (e.g., style, colors, elements)</label>
-                    <textarea id="logoDescription" class="w-full h-24 resize-y" maxlength="250" placeholder="A sleek, modern logo with a subtle gear icon, in blue and silver." data-en-placeholder="A sleek, modern logo with a subtle gear icon, in blue and silver." data-km-placeholder="រូបសញ្ញាទំនើប រលោង មានរូបតំណាងហ្គែរតូចមួយ ពណ៌ខៀវ និងប្រាក់។"></textarea>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                        <span id="charCount">0</span>/<span id="maxChar">250</span> <span id="charUnit" data-en="characters" data-km="តួអក្សរ">characters</span>
-                    </p>
-                </div>
+       let uploadedImageData = null; // Stores base64 image data
 
-                <div id="imageInputContainer" class="hidden">
-                    <label class="block text-lg font-medium mb-2" data-en="Upload an image to create a symbolic/iconic representation" data-km="ផ្ទុករូបភាពដើម្បីបង្កើតជាតំណាងនិមិត្តសញ្ញា/រូបតំណាង">Upload an image to create a symbolic/iconic representation</label>
-                    <input type="file" id="logoBaseImageUpload" accept="image/*" class="custom-file-input">
-                    <p class="text-sm text-gray-500 mt-2" data-en="Note: This image will inspire the AI, not be directly embedded." data-km="ចំណាំ៖ រូបភាពនេះនឹងបំផុសគំនិត AI មិនមែនបញ្ចូលដោយផ្ទាល់ទេ។">Note: This image will inspire the AI, not be directly embedded.</p>
-                </div>
+       // --- Language Management ---
+       const translations = {
+           en: {
+               appName: "AI Business Logo Generator",
+               generateYourLogo: "Generate Your Business Logo",
+               companyNameLabel: "Business Name:",
+               designCharactersLabel: "Core Concept / Design Elements:",
+               taglineLabel: "Tagline / Slogan (Optional):",
+               loremIpsumLabel: "Business Description / Specific Requirements:",
+               clickOrDrag: "Click or drag an image here",
+               generateLogoBtn: "Generate Business Logo",
+               generatedLogoLabel: "Generated Logo:",
+               downloadLogoBtn: "Download Logo",
+               generatingLogo: "Generating business logo...",
+               logoGeneratedSuccess: "Business logo generated successfully!",
+               logoGenerationFailed: "Failed to generate logo. Please try again.",
+               noInputError: "Please provide at least a Business Name or Core Concept / Design Elements.",
+               imageSizeTooLarge: "Image size is too large (max 4MB).",
+               invalidImageFile: "Invalid image file."
+           },
+           km: {
+               appName: "កម្មវិធីបង្កើតរូបសញ្ញាអាជីវកម្ម AI",
+               generateYourLogo: "បង្កើតរូបសញ្ញាអាជីវកម្មរបស់អ្នក",
+               companyNameLabel: "ឈ្មោះអាជីវកម្ម៖",
+               designCharactersLabel: "គំនិតស្នូល / ធាតុរចនា៖",
+               taglineLabel: "ពាក្យស្លោក / បាវចនា (ស្រេចចិត្ត)៖",
+               loremIpsumLabel: "ការពិពណ៌នាអាជីវកម្ម / តម្រូវការជាក់លាក់៖",
+               clickOrDrag: "ចុច ឬអូសរូបភាពនៅទីនេះ",
+               generateLogoBtn: "បង្កើតរូបសញ្ញាអាជីវកម្ម",
+               generatedLogoLabel: "រូបសញ្ញាដែលបានបង្កើត៖",
+               downloadLogoBtn: "ទាញយករូបសញ្ញា",
+               generatingLogo: "កំពុងបង្កើតរូបសញ្ញាអាជីវកម្ម...",
+               logoGeneratedSuccess: "បង្កើតរូបសញ្ញាអាជីវកម្មបានជោគជ័យ!",
+               logoGenerationFailed: "បរាជ័យក្នុងការបង្កើតរូបសញ្ញា។ សូមព្យាយាមម្តងទៀត។",
+               noInputError: "សូមបញ្ចូលឈ្មោះអាជីវកម្ម ឬគំនិតស្នូល / ធាតុរចនាយ៉ាងហោចណាស់មួយ។",
+               imageSizeTooLarge: "ទំហំរូបភាពធំពេក (អតិបរមា 4MB)។",
+               invalidImageFile: "ឯកសាររូបភាពមិនត្រឹមត្រូវ។"
+           }
+       };
 
-                <!-- Image References for AI Assistance -->
-                <div>
-                    <label class="block text-lg font-medium mb-2" data-en="Upload image references for AI assistance (optional)" data-km="ផ្ទុករូបភាពយោងសម្រាប់ការជួយពី AI (ស្រេចចិត្ត)">Upload image references for AI assistance (optional)</label>
-                    <input type="file" id="imageReferencesUpload" accept="image/*" multiple class="custom-file-input">
-                    <p class="text-sm text-gray-500 mt-2" data-en="These images will guide the AI's understanding of your style preferences." data-km="រូបភាពទាំងនេះនឹងណែនាំ AI ក្នុងការយល់ដឹងពីចំណូលចិត្តរចនាប័ទ្មរបស់អ្នក។">These images will guide the AI's understanding of your style preferences.</p>
-                </div>
+       let currentLanguage = 'en';
 
-                <!-- Generate Button -->
-                <button id="generateLogoBtn" class="btn btn-primary w-full mt-4" data-en="Generate Logo" data-km="បង្កើតរូបសញ្ញា">Generate Logo</button>
-                <div id="loadingIndicator" class="hidden mt-4 flex justify-center items-center">
-                    <div class="loader"></div>
-                    <span class="ml-3 text-lg font-medium" data-en="Generating..." data-km="កំពុងបង្កើត...">Generating...</span>
-                </div>
-            </div>
+       function setLanguage(lang) {
+           currentLanguage = lang;
+           currentLanguageText.innerText = lang.toUpperCase(); // Update language display in dropdown
+           document.querySelectorAll('[data-i18n]').forEach(element => {
+               const key = element.getAttribute('data-i18n');
+               if (translations[lang] && translations[lang][key]) {
+                   element.innerText = translations[lang][key];
+               }
+           });
+           // Update placeholders manually for inputs/textareas
+           companyNameInput.placeholder = translations[lang].companyNameInputPlaceholder || translations.en.companyNameInputPlaceholder;
+           designCharactersInput.placeholder = translations[lang].designCharactersInputPlaceholder || translations.en.designCharactersInputPlaceholder;
+           taglineInput.placeholder = translations[lang].taglineInputPlaceholder || translations.en.taglineInputPlaceholder;
+           loremIpsumInput.placeholder = translations[lang].loremIpsumInputPlaceholder || translations.en.loremIpsumInputPlaceholder;
+           imageUploadPlaceholder.querySelector('span').innerText = translations[lang].clickOrDrag || translations.en.clickOrDrag;
 
-            <!-- Right Panel: Logo Display -->
-            <div class="card p-6 md:p-8 flex flex-col justify-center items-center relative min-h-[300px] lg:min-h-full">
-                <h2 class="text-2xl font-semibold mb-4" data-en="Your Generated Logo" data-km="រូបសញ្ញាដែលបានបង្កើតរបស់អ្នក">Your Generated Logo</h2>
-                <div id="logoDisplay" class="w-full h-64 md:h-96 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden shadow-inner">
-                    <img id="generatedLogoImage" src="" alt="Generated Logo" class="max-w-full max-h-full object-contain" style="display: none;">
-                    <p id="logoPlaceholderText" class="text-gray-500 dark:text-gray-400 text-center" data-en="Your generated logo will appear here." data-km="រូបសញ្ញាដែលបានបង្កើតរបស់អ្នកនឹងបង្ហាញនៅទីនេះ។">Your generated logo will appear here.</p>
-                </div>
-                <p id="previousLogoInfluence" class="text-sm text-gray-500 dark:text-gray-400 mt-4 text-center hidden" data-en="This generation is influenced by your previous logo design." data-km="ការបង្កើតនេះត្រូវបានជះឥទ្ធិពលដោយការរចនារូបសញ្ញាពីមុនរបស់អ្នក។"></p>
-            </div>
-        </section>
-    </main>
+           // Update placeholder for generated logo if it's the initial placeholder image
+           if (generatedLogo.src.includes('placehold.co')) {
+               const placeholderText = encodeURIComponent(translations[lang].generatedLogoPlaceholder || 'Your Logo Here');
+               generatedLogo.src = `https://placehold.co/400x250/e0e0e0/555555?text=${placeholderText}`;
+           }
+       }
 
-    <!-- Footer -->
-    <footer class="w-full py-4 px-6 text-center text-sm text-gray-600 dark:text-gray-400 mt-8">
-        <p data-en="&copy; 2025 Website. All rights reserved. Designed by Lyhuy." data-km="&copy; 2025 គេហទំព័រ។ រក្សាសិទ្ធិគ្រប់យ៉ាង។ រចនាដោយ លី ហ៊ុយ។">&copy; 2025 Website. All rights reserved. Designed by Lyhuy.</p>
-    </footer>
+       // Initialize language
+       setLanguage(currentLanguage);
 
-    <script type="module">
-        // Global variables for Firebase configuration (if used)
-        // These are typically provided by the Canvas environment.
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+       // Language dropdown event listeners
+       document.querySelectorAll('.dropdown-item').forEach(item => {
+           item.addEventListener('click', (e) => {
+               e.preventDefault();
+               const lang = e.target.getAttribute('data-lang');
+               setLanguage(lang);
+           });
+       });
 
-        // Message Box Functionality
-        function showMessageBox(message, duration = 3000) {
-            const messageBox = document.getElementById('messageBox');
-            messageBox.textContent = message;
-            messageBox.classList.add('show');
-            setTimeout(() => {
-                messageBox.classList.remove('show');
-            }, duration);
-        }
+       // --- Theme Management ---
+       function toggleTheme() {
+           if (htmlElement.getAttribute('data-bs-theme') === 'dark') {
+               htmlElement.setAttribute('data-bs-theme', 'light');
+               themeIcon.classList.remove('fa-moon');
+               themeIcon.classList.add('fa-sun');
+           } else {
+               htmlElement.setAttribute('data-bs-theme', 'dark');
+               themeIcon.classList.remove('fa-sun');
+               themeIcon.classList.add('fa-moon');
+           }
+       }
 
-        // DOM Elements
-        const companyNameInput = document.getElementById('companyName');
-        const taglineInput = document.getElementById('tagline'); // New tagline input
-        const logoDescriptionInput = document.getElementById('logoDescription');
-        const logoBaseImageUpload = document.getElementById('logoBaseImageUpload');
-        const imageReferencesUpload = document.getElementById('imageReferencesUpload');
-        const generateLogoBtn = document.getElementById('generateLogoBtn');
-        const generatedLogoImage = document.getElementById('generatedLogoImage');
-        const logoPlaceholderText = document.getElementById('logoPlaceholderText');
-        const loadingIndicator = document.getElementById('loadingIndicator');
+       themeToggleBtn.addEventListener('click', toggleTheme);
 
-        const baseTextRadio = document.getElementById('baseText');
-        const baseImageRadio = document.getElementById('baseImage');
-        const textInputContainer = document.getElementById('textInputContainer');
-        const imageInputContainer = document.getElementById('imageInputContainer');
+       // Initialize theme icon based on current theme
+       if (htmlElement.getAttribute('data-bs-theme') === 'dark') {
+           themeIcon.classList.remove('fa-sun');
+           themeIcon.classList.add('fa-moon');
+       } else {
+           themeIcon.classList.remove('fa-moon');
+           themeIcon.classList.add('fa-sun');
+       }
 
-        const themeSwitch = document.getElementById('themeSwitch');
-        const sunIcon = document.getElementById('sunIcon');
-        const moonIcon = document.getElementById('moonIcon');
-        const languageSwitch = document.getElementById('languageSwitch');
+       // --- Image Upload and Preview ---
+       imageUploadInput.addEventListener('change', function(event) {
+           const file = event.target.files[0];
+           if (file) {
+               if (file.size > 4 * 1024 * 1024) { // Max 4MB
+                   showAlert(translations[currentLanguage].imageSizeTooLarge, 'danger');
+                   imageUploadInput.value = ''; // Clear the input
+                   imagePreview.style.display = 'none';
+                   imageUploadPlaceholder.style.display = 'flex'; // Ensure flex for proper centering
+                   uploadedImageData = null;
+                   return;
+               }
 
-        const charCountSpan = document.getElementById('charCount');
-        const maxCharSpan = document.getElementById('maxChar');
-        const charUnitSpan = document.getElementById('charUnit');
-        const MAX_CHARS = parseInt(maxCharSpan.textContent);
+               const reader = new FileReader();
+               reader.onload = function(e) {
+                   imagePreview.src = e.target.result;
+                   imagePreview.style.display = 'block';
+                   imageUploadPlaceholder.style.display = 'none';
+                   // Store only the base64 part for sending to the API
+                   uploadedImageData = e.target.result.split(',')[1];
+               };
+               reader.onerror = function() {
+                   showAlert(translations[currentLanguage].invalidImageFile, 'danger');
+                   imagePreview.style.display = 'none';
+                   imageUploadPlaceholder.style.display = 'flex';
+                   uploadedImageData = null;
+               };
+               reader.readAsDataURL(file);
+           } else {
+               imagePreview.style.display = 'none';
+               imageUploadPlaceholder.style.display = 'flex';
+               uploadedImageData = null;
+           }
+       });
 
-        const previousLogoInfluenceText = document.getElementById('previousLogoInfluence');
-
-        let previousLogoPrompt = ""; // Stores the prompt of the last successful generation
-
-        // Theme Switch Logic
-        function setTheme(theme) {
-            document.body.classList.remove('light-theme', 'dark-theme');
-            document.body.classList.add(`${theme}-theme`);
-            if (theme === 'dark') {
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
-            } else {
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-            }
-            localStorage.setItem('theme', theme);
-        }
-
-        // Initialize theme from localStorage or default to light
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        setTheme(savedTheme);
-
-        themeSwitch.addEventListener('click', () => {
-            const currentTheme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
-            setTheme(currentTheme === 'light' ? 'dark' : 'light');
-        });
-
-        // Language Switch Logic
-        const translations = {
-            en: {
-                // These are primarily for dynamic messages not hardcoded in data attributes
-                "Please enter a company name.": "Please enter a company name.",
-                "Please describe your logo.": "Please describe your logo.",
-                "Please upload a base image for the logo.": "Please upload a base image for the logo.",
-                "Logo generated successfully!": "Logo generated successfully!",
-                "Failed to generate logo. Please try again.": "Failed to generate logo. Please try again.",
-                "Could not generate logo.": "Could not generate logo.",
-                "An error occurred while generating the logo.": "An error occurred while generating the logo.",
-                "Generating...": "Generating...",
-                "characters": "characters",
-                "This generation is influenced by your previous logo design.": "This generation is influenced by your previous logo design."
-            },
-            km: {
-                "Please enter a company name.": "សូមបញ្ចូលឈ្មោះក្រុមហ៊ុន។",
-                "Please describe your logo.": "សូមពិពណ៌នាអំពី​រូបសញ្ញារបស់អ្នក។",
-                "Please upload a base image for the logo.": "សូមផ្ទុករូបភាពមូលដ្ឋានសម្រាប់រូបសញ្ញា។",
-                "Logo generated successfully!": "រូបសញ្ញាបានបង្កើតដោយជោគជ័យ!",
-                "Failed to generate logo. Please try again.": "បរាជ័យក្នុងការបង្កើតរូបសញ្ញា។",
-                "Could not generate logo.": "មិនអាចបង្កើតរូបសញ្ញាបានទេ។",
-                "An error occurred while generating the logo.": "មានកំហុសក្នុងការបង្កើតរូបសញ្ញា។",
-                "Generating...": "កំពុងបង្កើត...",
-                "characters": "តួអក្សរ",
-                "This generation is influenced by your previous logo design.": "ការបង្កើតនេះត្រូវបានជះឥទ្ធិពលដោយការរចនារូបសញ្ញាពីមុនរបស់អ្នក។"
-            }
-        };
-
-        function setLanguage(lang) {
-            // Update elements with data-en and data-km attributes
-            document.querySelectorAll('[data-en][data-km]').forEach(element => {
-                if (lang === 'en') {
-                    element.textContent = element.getAttribute('data-en');
-                } else if (lang === 'km') {
-                    element.textContent = element.getAttribute('data-km');
-                }
-            });
-
-            // Update placeholder attributes
-            document.querySelectorAll('[data-en-placeholder][data-km-placeholder]').forEach(element => {
-                if (lang === 'en') {
-                    element.setAttribute('placeholder', element.getAttribute('data-en-placeholder'));
-                } else if (lang === 'km') {
-                    element.setAttribute('placeholder', element.getAttribute('data-km-placeholder'));
-                }
-            });
-
-            // Update page title
-            const pageTitle = document.querySelector('title');
-            if (pageTitle.hasAttribute('data-en') && pageTitle.hasAttribute('data-km')) {
-                if (lang === 'en') {
-                    pageTitle.textContent = pageTitle.getAttribute('data-en');
-                } else if (lang === 'km') {
-                    pageTitle.textContent = pageTitle.getAttribute('data-km');
-                }
-            }
-
-            // Update character counter unit text
-            if (charUnitSpan) {
-                charUnitSpan.textContent = translations[lang]["characters"];
-            }
-        }
-
-        // Initialize language from localStorage or default to English
-        const savedLanguage = localStorage.getItem('language') || 'en';
-        languageSwitch.value = savedLanguage;
-        setLanguage(savedLanguage);
-
-        languageSwitch.addEventListener('change', (event) => {
-            const newLang = event.target.value;
-            setLanguage(newLang);
-            localStorage.setItem('language', newLang);
-        });
-
-        // Character counter update
-        logoDescriptionInput.addEventListener('input', () => {
-            charCountSpan.textContent = logoDescriptionInput.value.length;
-        });
-
-        // Initialize character count on load
-        logoDescriptionInput.dispatchEvent(new Event('input'));
-
-
-        // Toggle Logo Base Input Containers
-        baseTextRadio.addEventListener('change', () => {
-            textInputContainer.classList.remove('hidden');
-            imageInputContainer.classList.add('hidden');
-        });
-
-        baseImageRadio.addEventListener('change', () => {
-            textInputContainer.classList.add('hidden');
-            imageInputContainer.classList.remove('hidden');
-        });
-
-        // AI Logo Generation Logic
-        generateLogoBtn.addEventListener('click', async () => {
-            const companyName = companyNameInput.value.trim();
-            const tagline = taglineInput.value.trim(); // Get tagline value
-            let currentBasePrompt = "";
-            let imageReferencePrompt = "";
-            const currentLang = languageSwitch.value;
-
-            // Hide influence message at the start of a new generation
-            previousLogoInfluenceText.classList.add('hidden');
-
-            if (!companyName) {
-                showMessageBox(translations[currentLang]["Please enter a company name."]);
-                return;
-            }
-
-            // Construct the core logo prompt
-            if (baseTextRadio.checked) {
-                const description = logoDescriptionInput.value.trim();
-                if (!description) {
-                    showMessageBox(translations[currentLang]["Please describe your logo."]);
-                    return;
-                }
-                currentBasePrompt = `A logo for a company named "${companyName}". Description: "${description}".`;
-            } else { // baseImageRadio.checked
-                const baseImageFile = logoBaseImageUpload.files[0];
-                if (!baseImageFile) {
-                    showMessageBox(translations[currentLang]["Please upload a base image for the logo."]);
-                    return;
-                }
-                currentBasePrompt = `A symbolic/iconic logo for "${companyName}", inspired by an uploaded image. The design should capture the essence of a ${baseImageFile.name.split('.')[0]} with modern, clean lines.`;
-            }
-
-            // Add tagline to the prompt if provided
-            if (tagline) {
-                currentBasePrompt += ` The logo should also incorporate the tagline: "${tagline}".`;
-            }
-
-            // Handle image references (conceptually)
-            const referenceFiles = imageReferencesUpload.files;
-            if (referenceFiles.length > 0) {
-                const referenceNames = Array.from(referenceFiles).map(file => file.name.split('.')[0]).join(', ');
-                imageReferencePrompt = ` Also consider the style and aesthetic of provided reference images, such as those related to: ${referenceNames}.`;
-            }
-
-            let fullPrompt = currentBasePrompt + imageReferencePrompt;
-
-            // Append previous logo influence if available
-            if (previousLogoPrompt) {
-                fullPrompt += ` Furthermore, evolve this design by blending it with elements and the aesthetic previously generated from: [Previous Logo Context: ${previousLogoPrompt}].`;
-                previousLogoInfluenceText.classList.remove('hidden'); // Show influence message
-            }
-
-            // Add general styling instructions
-            fullPrompt += " Ensure the logo is highly professional, minimalistic, and suitable for a brand. Use a clean, rounded, iOS-inspired style.";
-
-            // Show loading indicator
-            loadingIndicator.classList.remove('hidden');
-            generateLogoBtn.disabled = true;
-            generatedLogoImage.style.display = 'none';
-            logoPlaceholderText.style.display = 'block';
-            logoPlaceholderText.textContent = translations[currentLang]["Generating..."];
+       // Drag and drop functionality for image upload
+       const imageUploadWrapper = document.querySelector('.image-upload-wrapper');
+       imageUploadWrapper.addEventListener('dragover', (e) => {
+           e.preventDefault();
+           imageUploadWrapper.style.borderColor = 'var(--apple-blue)';
+           imageUploadWrapper.style.backgroundColor = 'var(--light-bg-secondary)';
+       });
+       imageUploadWrapper.addEventListener('dragleave', (e) => {
+           e.preventDefault();
+           imageUploadWrapper.style.borderColor = 'var(--light-border)';
+           imageUploadWrapper.style.backgroundColor = 'var(--light-bg-primary)';
+       });
+       imageUploadWrapper.addEventListener('drop', (e) => {
+           e.preventDefault();
+           imageUploadWrapper.style.borderColor = 'var(--light-border)';
+           imageUploadWrapper.style.backgroundColor = 'var(--light-bg-primary)';
+           const files = e.dataTransfer.files;
+           if (files.length > 0) {
+               imageUploadInput.files = files; // Assign dropped files to input
+               const event = new Event('change');
+               imageUploadInput.dispatchEvent(event); // Trigger change event
+           }
+       });
 
 
-            try {
-                // Gemini API call for image generation (using imagen-3.0-generate-002)
-                const payload = { instances: { prompt: fullPrompt }, parameters: { "sampleCount": 1 } };
-                const apiKey = ""; // Canvas will automatically provide this if empty
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+       // --- Logo Generation Logic ---
+       generateLogoBtn.addEventListener('click', async () => {
+           const companyName = companyNameInput.value.trim();
+           const designCharacters = designCharactersInput.value.trim();
+           const tagline = taglineInput.value.trim();
+           const loremIpsum = loremIpsumInput.value.trim();
 
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+           if (!companyName && !designCharacters) {
+               showAlert(translations[currentLanguage].noInputError, 'warning');
+               return;
+           }
 
-                const result = await response.json();
+           // Construct the prompt for the AI, specifically for business logos
+           let prompt = `Design a professional, commercially viable business logo.`;
+           if (companyName) prompt += ` The business name is "${companyName}".`;
+           if (designCharacters) prompt += ` The core concept or design elements are "${designCharacters}".`;
+           if (tagline) prompt += ` The tagline is "${tagline}".`;
+           if (loremIpsum) prompt += ` Business description and specific requirements: ${loremIpsum}.`;
+           prompt += ` The logo should be clean, modern, scalable, and suitable for professional branding across various media (web, print, merchandise). Focus on a minimalist, sleek design with subtle use of color, high contrast, and clean lines, similar to Apple's aesthetic, ensuring it conveys trustworthiness and innovation. Generate a single, distinct logo image.`;
 
-                if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
-                    const imageUrl = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
-                    generatedLogoImage.src = imageUrl;
-                    generatedLogoImage.style.display = 'block';
-                    logoPlaceholderText.style.display = 'none';
-                    showMessageBox(translations[currentLang]["Logo generated successfully!"]);
 
-                    // Store the current fullPrompt for next generation's influence
-                    previousLogoPrompt = fullPrompt;
+           // Prepare payload for Gemini API
+           const contents = [];
+           contents.push({ role: "user", parts: [{ text: prompt }] });
 
-                } else {
-                    showMessageBox(translations[currentLang]["Failed to generate logo. Please try again."]);
-                    logoPlaceholderText.textContent = translations[currentLang]["Could not generate logo."];
-                    previousLogoPrompt = ""; // Clear previous prompt if generation fails
-                }
-            } catch (error) {
-                console.error('Error generating logo:', error);
-                showMessageBox(translations[currentLang]["An error occurred while generating the logo."]);
-                logoPlaceholderText.textContent = translations[currentLang]["An error occurred while generating the logo."];
-                previousLogoPrompt = ""; // Clear previous prompt on error
-            } finally {
-                loadingIndicator.classList.add('hidden');
-                generateLogoBtn.disabled = false;
-            }
-        });
-    </script>
+           if (uploadedImageData) {
+               contents[0].parts.push({
+                   inlineData: {
+                       mimeType: "image/png", // Assuming PNG, but could be dynamic if needed
+                       data: uploadedImageData
+                   }
+               });
+           }
+
+           const payload = {
+               instances: {
+                   prompt: prompt
+               },
+               parameters: {
+                   sampleCount: 1
+               }
+           };
+
+           const apiKey = ""; // Canvas will automatically provide this at runtime
+           const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+
+           loadingSpinner.classList.add('active');
+           generateLogoBtn.disabled = true;
+           downloadLogoBtn.disabled = true;
+           generatedLogo.style.opacity = '0.5'; // Dim logo during generation
+
+           try {
+               const response = await fetch(apiUrl, {
+                   method: 'POST',
+                   headers: { 'Content-Type': 'application/json' },
+                   body: JSON.stringify(payload)
+               });
+
+               const result = await response.json();
+
+               if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
+                   const imageUrl = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
+                   generatedLogo.src = imageUrl;
+                   downloadLogoBtn.disabled = false;
+                   showAlert(translations[currentLanguage].logoGeneratedSuccess, 'success');
+               } else {
+                   console.error("API response error:", result);
+                   showAlert(translations[currentLanguage].logoGenerationFailed, 'danger');
+               }
+           } catch (error) {
+               console.error("Error generating logo:", error);
+               showAlert(translations[currentLanguage].logoGenerationFailed, 'danger');
+           } finally {
+               loadingSpinner.classList.remove('active');
+               generateLogoBtn.disabled = false;
+               generatedLogo.style.opacity = '1'; // Restore opacity
+           }
+       });
+
+       // --- Download Logo Functionality ---
+       downloadLogoBtn.addEventListener('click', () => {
+           const imgUrl = generatedLogo.src;
+           if (imgUrl && !imgUrl.includes('placehold.co')) {
+               const link = document.createElement('a');
+               link.href = imgUrl;
+               link.download = 'generated_business_logo.png';
+               document.body.appendChild(link);
+               link.click();
+               document.body.removeChild(link);
+           }
+       });
+
+       // Initial placeholder text for generated logo if it's the default
+       if (generatedLogo.src.includes('placehold.co')) {
+           const placeholderText = encodeURIComponent(translations[currentLanguage].generatedLogoPlaceholder || 'Your Logo Here');
+           generatedLogo.src = `https://placehold.co/400x250/e0e0e0/555555?text=${placeholderText}`;
+       }
+   </script>
 </body>
 </html>
