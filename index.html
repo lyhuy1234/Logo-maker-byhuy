@@ -1,746 +1,576 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Business Logo Generator</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Google Fonts - Inter (Close to Apple's San Francisco) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>AI Logo Generator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Apple-inspired Color Palette and Variables */
-        :root {
-            --apple-blue: #007aff; /* System Blue */
-            --apple-green: #34c759; /* System Green */
-            --apple-red: #ff3b30; /* System Red for alerts */
-            --apple-gray-1: #8e8e93; /* Lighter Gray for text */
-            --apple-gray-2: #636366; /* Darker Gray for text */
-
-            /* Light Theme */
-            --light-bg-primary: #f2f2f7; /* Very light background */
-            --light-bg-secondary: #ffffff; /* Card/component background */
-            --light-text-primary: #1c1c1e; /* Dark text */
-            --light-text-secondary: #636366; /* Secondary text */
-            --light-border: #e0e0e0; /* Light borders */
-            --light-shadow-color: rgba(0, 0, 0, 0.08); /* Subtle shadow */
-            --light-input-border-focus: #b5d5ff; /* Light blue focus border */
-        }
-
-        /* Dark Theme */
-        [data-bs-theme="dark"] {
-            --light-bg-primary: #1c1c1e; /* Dark background */
-            --light-bg-secondary: #2c2c2e; /* Card/component background */
-            --light-text-primary: #ffffff; /* White text */
-            --light-text-secondary: #aeaeb2; /* Secondary text */
-            --light-border: #48484a; /* Dark borders */
-            --light-shadow-color: rgba(0, 0, 0, 0.3); /* Darker shadow */
-            --light-input-border-focus: #004d99; /* Darker blue focus border */
-        }
-
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--light-bg-primary);
-            color: var(--light-text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
-            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
         }
-
-        /* General Container & Card Styling */
-        .container {
-            max-width: 960px; /* Slightly wider for modern feel */
+        /* Base Light Theme */
+        body {
+            background-color: #f0f2f5; /* Lighter background */
+            color: #1f2937; /* Darker text */
         }
-
-        .card {
-            border-radius: 1.5rem; /* More rounded */
-            box-shadow: 0 6px 16px var(--light-shadow-color); /* More pronounced but soft shadow */
-            background-color: var(--light-bg-secondary);
-            color: var(--light-text-primary);
-            border: none; /* Remove default bootstrap border */
-            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        /* Dark Mode Styles */
+        body.dark {
+            background-color: #121212; /* Very dark background for true dark mode */
+            color: #e0e0e0; /* Light text for dark mode */
         }
-
-        /* Navbar Styling */
-        .navbar {
-            background-color: var(--light-bg-secondary);
-            border-bottom: 1px solid var(--light-border);
-            box-shadow: 0 2px 4px var(--light-shadow-color);
-            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            border-radius: 0 0 1.5rem 1.5rem; /* Rounded bottom corners */
+        body.dark .bg-white {
+            background-color: #1e1e1e; /* Darker card background */
+            color: #e0e0e0;
         }
-
-        .navbar-brand {
-            font-weight: 600; /* Semi-bold for brand name */
-            color: var(--light-text-primary) !important; /* Ensure color override */
+        body.dark .text-gray-900 {
+            color: #e0e0e0;
         }
-
-        .navbar-brand .fas {
-            color: var(--apple-blue); /* Accent color for icon */
+        body.dark input, body.dark textarea, body.dark select {
+            background-color: #2c2c2c; /* Darker input background */
+            color: #e0e0e0;
+            border-color: #424242; /* Darker border */
         }
-
-        /* Form Elements */
-        .form-control, .form-select, .form-control:focus, .form-select:focus {
-            background-color: var(--light-bg-primary);
-            color: var(--light-text-primary);
-            border: 1px solid var(--light-border);
-            border-radius: 0.75rem; /* Slightly more rounded inputs */
-            padding: 0.8rem 1rem; /* More padding */
-            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+        body.dark .border-gray-300 {
+            border-color: #424242;
         }
-        .form-control::placeholder {
-            color: var(--apple-gray-1); /* Lighter placeholder text */
-            opacity: 0.8;
+        body.dark .placeholder-gray-500::placeholder {
+            color: #a0a0a0;
         }
-        .form-control:focus {
-            border-color: var(--apple-blue);
-            box-shadow: 0 0 0 4px var(--light-input-border-focus); /* Subtle blue glow on focus */
-            background-color: var(--light-bg-secondary); /* Background might change slightly on focus */
+        body.dark .shadow-lg, body.dark .shadow-xl {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2); /* Stronger dark mode shadows */
         }
-        .form-label {
-            font-weight: 500; /* Medium weight for labels */
-            color: var(--light-text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Buttons */
-        .btn {
-            border-radius: 0.75rem; /* Consistently rounded */
-            padding: 0.75rem 1.25rem; /* Generous padding */
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
+        /* Buttons - Primary (Generate) */
         .btn-primary {
-            background-color: var(--apple-blue);
-            border-color: var(--apple-blue);
-            color: white;
-            box-shadow: 0 2px 6px rgba(0, 122, 255, 0.3); /* Subtle blue shadow */
+            background-color: #6200EE; /* Material Design Primary Purple */
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease;
         }
         .btn-primary:hover {
-            background-color: #006ee6; /* Slightly darker blue */
-            border-color: #006ee6;
-            box-shadow: 0 4px 10px rgba(0, 122, 255, 0.4);
-            transform: translateY(-1px); /* Slight lift */
+            background-color: #3700B3; /* Darker purple on hover */
+            transform: translateY(-2px); /* Slight lift on hover */
         }
         .btn-primary:active {
-            background-color: #005bb7;
-            border-color: #005bb7;
-            box-shadow: none;
-            transform: translateY(0);
+            transform: translateY(0); /* Return to original position on click */
         }
-
-        .btn-success {
-            background-color: var(--apple-green);
-            border-color: var(--apple-green);
+        /* Buttons - Secondary (Toggle - for language/theme) */
+        .btn-toggle {
+            background-color: #6200EE; /* Primary color for toggle buttons */
             color: white;
-            box-shadow: 0 2px 6px rgba(52, 199, 89, 0.3);
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease;
         }
-        .btn-success:hover {
-            background-color: #2da44e;
-            border-color: #2da44e;
-            box-shadow: 0 4px 10px rgba(52, 199, 89, 0.4);
-            transform: translateY(-1px);
+        .btn-toggle:hover {
+            background-color: #3700B3; /* Darker purple on hover */
+            transform: translateY(-2px);
         }
-        .btn-success:active {
-            background-color: #258f44;
-            border-color: #258f44;
-            box-shadow: none;
+        .btn-toggle:active {
             transform: translateY(0);
         }
-
-        .btn-outline-secondary {
-            border: 1px solid var(--light-border);
-            color: var(--light-text-primary);
-            background-color: transparent;
-            border-radius: 0.75rem; /* Ensure rounded corners */
+        body.dark .btn-toggle {
+            background-color: #03DAC6; /* Secondary teal for dark mode */
+            color: #121212;
         }
-        .btn-outline-secondary:hover {
-            background-color: var(--light-bg-primary); /* Subtle background change on hover */
-            border-color: var(--apple-blue);
-            color: var(--apple-blue);
-        }
-        .btn-outline-secondary:focus, .btn-outline-secondary.active {
-            box-shadow: 0 0 0 4px var(--light-input-border-focus);
-            border-color: var(--apple-blue);
-            color: var(--apple-blue);
-            background-color: var(--light-bg-primary);
+        body.dark .btn-toggle:hover {
+            background-color: #018786;
         }
 
-        /* Dropdown */
-        .dropdown-menu {
-            border-radius: 0.75rem;
-            box-shadow: 0 6px 16px var(--light-shadow-color);
-            background-color: var(--light-bg-secondary);
-            border: 1px solid var(--light-border);
-            padding: 0.5rem;
+
+        /* Input Focus Ring */
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #6200EE;
+            box-shadow: 0 0 0 3px rgba(98, 0, 238, 0.3); /* Purple focus ring */
         }
-        .dropdown-item {
-            color: var(--light-text-primary);
-            padding: 0.6rem 1rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s ease, color 0.2s ease;
-        }
-        .dropdown-item:hover, .dropdown-item:active, .dropdown-item:focus {
-            background-color: var(--light-bg-primary);
-            color: var(--apple-blue);
+        body.dark input:focus, body.dark textarea:focus {
+            border-color: #BB86FC;
+            box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.3);
         }
 
-        /* Logo Preview */
-        .logo-preview {
-            border: 1px dashed var(--light-border); /* Subtle dashed border */
-            border-radius: 1rem;
-            min-height: 280px; /* Slightly taller */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--light-bg-primary); /* Lighter background */
-            overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Inner shadow for depth */
-            transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        /* Card Styling */
+        .card {
+            border-radius: 16px; /* More rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 15px rgba(0, 0, 0, 0.05); /* Softer, larger shadow */
         }
-        .logo-preview img {
-            max-width: 90%; /* Give some padding */
-            max-height: 90%;
-            object-fit: contain;
-            border-radius: 0.5rem;
-            transition: opacity 0.3s ease;
+        body.dark .card {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* Image Upload Wrapper */
-        .image-upload-wrapper {
-            position: relative;
-            height: 160px;
-            border: 1px dashed var(--light-border);
-            border-radius: 0.75rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            overflow: hidden;
-            background-color: var(--light-bg-primary);
-            transition: border-color 0.2s ease, background-color 0.3s ease;
-            padding: 1rem;
-            text-align: center;
+        /* Loading Spinner (for button) styles */
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.3); /* Light grey semi-transparent */
+            border-top: 4px solid #ffffff; /* White top border */
+            border-radius: 50%;
+            width: 20px; /* Slightly smaller spinner for button */
+            height: 20px;
+            animation: spin 1s linear infinite;
         }
-        .image-upload-wrapper:hover {
-            border-color: var(--apple-blue);
-            background-color: var(--light-bg-secondary);
+        body.dark .loader {
+            border: 4px solid rgba(0, 0, 0, 0.3);
+            border-top: 4px solid #03DAC6; /* Teal in dark mode */
         }
-        .image-upload-wrapper input[type="file"] {
-            position: absolute;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Progress Bar Styles */
+        .progress-bar-container {
             width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            margin-top: 1.5rem; /* Space from the button */
+        }
+        body.dark .progress-bar-container {
+            background-color: #424242;
+        }
+
+        .progress-bar {
             height: 100%;
-            opacity: 0;
-            cursor: pointer;
-            z-index: 10; /* Ensure it's clickable */
-        }
-        .image-upload-wrapper img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            border-radius: 0.5rem;
-        }
-        .image-upload-wrapper .placeholder-text {
-            color: var(--apple-gray-1);
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-        .image-upload-wrapper .placeholder-text .fas {
-            font-size: 1.8rem;
-            color: var(--apple-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Loading Overlay */
-        .loading-overlay {
+            width: 20%; /* Starting width for indeterminate */
+            background-color: #6200EE; /* Primary purple */
+            border-radius: 4px;
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10; /* Above logo, below alerts */
-            border-radius: 1rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            left: -20%; /* Start off-screen */
+            animation: indeterminate-progress 1.5s linear infinite;
         }
-        .loading-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-            color: white !important; /* Ensure white spinner */
+        body.dark .progress-bar {
+            background-color: #03DAC6; /* Secondary teal in dark mode */
         }
 
-        /* Custom Alert */
-        .alert-custom {
-            position: fixed;
-            top: 1.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1100;
-            min-width: 320px;
-            max-width: 90%;
-            text-align: center;
-            border-radius: 0.75rem;
-            padding: 0.8rem 1.5rem;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            opacity: 0;
-            transition: opacity 0.3s ease, top 0.3s ease;
-        }
-        .alert-custom.show {
-            opacity: 1;
-            top: 1.5rem; /* Final position */
-        }
-        .alert-custom.alert-info {
-            background-color: var(--apple-blue);
-            color: white;
-            border: 1px solid var(--apple-blue);
-        }
-        .alert-custom.alert-success {
-            background-color: var(--apple-green);
-            color: white;
-            border: 1px solid var(--apple-green);
-        }
-        .alert-custom.alert-danger {
-            background-color: var(--apple-red);
-            color: white;
-            border: 1px solid var(--apple-red);
-        }
-        .alert-custom.alert-warning {
-            background-color: #ffcc00; /* System Yellow */
-            color: var(--light-text-primary); /* Dark text on yellow */
-            border: 1px solid #ffcc00;
+        @keyframes indeterminate-progress {
+            0% { left: -20%; width: 20%; }
+            50% { left: 100%; width: 100%; }
+            100% { left: -20%; width: 20%; }
         }
 
-        /* Spacing adjustments */
-        .mb-3 { margin-bottom: 1.25rem !important; }
-        .mb-4 { margin-bottom: 1.75rem !important; }
-        .mt-3 { margin-top: 1.25rem !important; }
-        .py-3 { padding-top: 1rem !important; padding-bottom: 1rem !important; } /* Make buttons feel substantial */
-        .py-2 { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
-
-        /* Responsive adjustments */
-        @media (max-width: 767.98px) {
-            .card {
-                padding: 1.5rem !important;
-            }
-            .navbar {
-                border-radius: 0; /* No rounded bottom on mobile */
-            }
+        /* Hide scrollbar for a cleaner look */
+        body::-webkit-scrollbar {
+            display: none;
+        }
+        body {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
         }
     </style>
 </head>
-<body>
-    <div id="custom-alert-container"></div>
+<body class="min-h-screen flex flex-col justify-between">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 flex-grow">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-center mb-8 sm:mb-10 lg:mb-12">
+            <span id="app-title" class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400">AI Logo Generator</span>
+        </h1>
 
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <i class="fas fa-building me-2"></i> <span data-i18n="appName">AI Business Logo Generator</span>
-            </a>
-            <div class="d-flex">
-                <button class="btn btn-outline-secondary me-2 rounded-pill" id="theme-toggle">
-                    <i class="fas fa-sun" id="theme-icon"></i>
-                </button>
-                <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle rounded-pill" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span id="current-language-text">EN</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
-                        <li><a class="dropdown-item" href="#" data-lang="en">English</a></li>
-                        <li><a class="dropdown-item" href="#" data-lang="km">ខ្មែរ</a></li>
-                    </ul>
+        <!-- Navigation Bar for Language and Theme Switchers -->
+        <nav class="flex justify-end items-center gap-4 mb-8">
+            <button id="lang-toggle" class="btn-toggle w-14 h-14 flex items-center justify-center rounded-full shadow-lg transition duration-300 transform active:scale-95" aria-label="Switch Language">
+                <span id="lang-icon">
+                    <!-- Globe Icon (default for English) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                </span>
+                <span class="sr-only" id="switch-lang-text">Switch to Khmer</span>
+            </button>
+            <button id="theme-toggle" class="btn-toggle w-14 h-14 flex items-center justify-center rounded-full shadow-lg transition duration-300 transform active:scale-95" aria-label="Toggle Theme">
+                <span id="theme-icon">
+                    <!-- Moon Icon (default for Light Mode to switch to Dark) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </span>
+                <span class="sr-only" id="switch-theme-text">Dark Mode</span>
+            </button>
+        </nav>
+
+        <div class="bg-white p-6 sm:p-8 card mb-8">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100" id="input-section-title">Your Logo Ideas</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Company Name -->
+                <div>
+                    <label for="company-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" id="label-company-name">Full Company Name</label>
+                    <input type="text" id="company-name" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 dark:placeholder-gray-400" placeholder="e.g., Innovate Solutions Inc.">
+                </div>
+
+                <!-- Characters Base -->
+                <div>
+                    <label for="characters" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" id="label-characters">Character Base for Design</label>
+                    <input type="text" id="characters" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 dark:placeholder-gray-400" placeholder="e.g., a tree, a robot, abstract shapes">
+                </div>
+
+                <!-- Tagline -->
+                <div>
+                    <label for="tagline" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" id="label-tagline">Wrote Placeholder or Conceptual Tagline</label>
+                    <input type="text" id="tagline" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 dark:placeholder-gray-400" placeholder="e.g., Innovations for a Better Tomorrow">
+                </div>
+
+                <!-- Lorem Ipsum -->
+                <div>
+                    <label for="lorem-ipsum" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" id="label-lorem-ipsum">Contextual Text (e.g., Lorem Ipsum)</label>
+                    <textarea id="lorem-ipsum" rows="4" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500 dark:placeholder-gray-400" placeholder="Paste some text here for the AI to interpret for context..."></textarea>
+                </div>
+
+                <!-- Image Upload -->
+                <div class="col-span-1 md:col-span-2">
+                    <label for="image-upload" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" id="label-image-upload">Upload Image for Reference</label>
+                    <input type="file" id="image-upload" accept="image/*" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2" id="image-upload-help">Upload an image that inspires your logo's style or theme.</p>
+                    <div id="image-preview" class="mt-4 flex justify-center items-center h-40 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden border border-dashed border-gray-300 dark:border-gray-500">
+                        <span class="text-gray-400 dark:text-gray-300" id="no-image-preview">No image selected</span>
+                        <img src="" alt="Image Preview" class="max-h-full max-w-full object-contain hidden">
+                    </div>
+                </div>
+            </div>
+
+            <button id="generate-logo" class="mt-8 w-full btn-primary text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 transform active:scale-95 flex items-center justify-center">
+                <span id="generate-button-text">Generate Logo</span>
+                <div id="loading-spinner" class="loader ml-3 hidden"></div>
+            </button>
+
+            <!-- Loading Indicator / Progress Bar -->
+            <div id="loading-container" class="hidden text-center mt-6">
+                <p id="loading-message" class="text-gray-700 dark:text-gray-300 text-lg mb-3">Generating your logo concept and image...</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar"></div>
                 </div>
             </div>
         </div>
-    </nav>
 
-    <div class="container my-4">
-        <div class="card p-4 position-relative">
-            <h2 class="card-title text-center mb-4" data-i18n="generateYourLogo">Generate Your Business Logo</h2>
-            <div class="row g-4">
-                <div class="col-lg-6">
-                    <div class="mb-3">
-                        <label for="companyName" class="form-label" data-i18n="companyNameLabel">Business Name:</label>
-                        <input type="text" class="form-control" id="companyName" placeholder="e.g., Global Innovations Corp">
-                    </div>
-                    <div class="mb-3">
-                        <label for="designCharacters" class="form-label" data-i18n="designCharactersLabel">Core Concept / Design Elements:</label>
-                        <input type="text" class="form-control" id="designCharacters" placeholder="e.g., growth, interconnected, abstract, globe, leaf">
-                    </div>
-                    <div class="mb-3">
-                        <label for="tagline" class="form-label" data-i18n="taglineLabel">Tagline / Slogan (Optional):</label>
-                        <textarea class="form-control" id="tagline" rows="2" placeholder="e.g., Empowering Tomorrow's Solutions"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="loremIpsum" class="form-label" data-i18n="loremIpsumLabel">Business Description / Specific Requirements:</label>
-                        <textarea class="form-control" id="loremIpsum" rows="4" placeholder="e.g., Describe your industry, target audience, brand values, or any specific visual elements (e.g., 'tech company focusing on sustainable energy', 'luxury brand with a modern, clean aesthetic')."></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="imageUpload" class="form-label" data-i18n="imageRefLabel">Upload Reference Image (Optional):</label>
-                        <div class="image-upload-wrapper">
-                            <input type="file" id="imageUpload" accept="image/*">
-                            <img id="imagePreview" src="#" alt="Image Preview" style="display:none;">
-                            <span class="placeholder-text" id="imageUploadPlaceholder">
-                                <i class="fas fa-upload d-block mb-2"></i> <span data-i18n="clickOrDrag">Click or drag an image here</span>
-                            </span>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-primary w-100 py-3 mt-3" id="generateLogoBtn" data-i18n="generateLogoBtn">
-                        Generate Business Logo
-                    </button>
-                </div>
-                <div class="col-lg-6 d-flex flex-column">
-                    <label class="form-label" data-i18n="generatedLogoLabel">Generated Logo:</label>
-                    <div class="logo-preview flex-grow-1 position-relative">
-                        <img id="generatedLogo" src="https://placehold.co/400x250/e0e0e0/555555?text=Your+Logo+Here" alt="Generated Logo Placeholder">
-                        <div class="loading-overlay" id="loadingSpinner">
-                            <div class="spinner-border" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-success w-100 py-2 mt-3" id="downloadLogoBtn" data-i18n="downloadLogoBtn" disabled>
-                        Download Logo
-                    </button>
-                </div>
+        <!-- Output Section -->
+        <div id="output-section" class="bg-white p-6 sm:p-8 card hidden">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100" id="output-section-title">Your Generated Logo & Concept</h2>
+            <div class="flex flex-col items-center mb-6">
+                <img id="generated-logo" src="https://placehold.co/200x200/cccccc/ffffff?text=Logo" alt="Generated Logo" class="w-48 h-48 sm:w-64 sm:h-64 object-contain rounded-xl border border-gray-200 dark:border-gray-700 shadow-md">
+            </div>
+            <div class="mb-4">
+                <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200" id="tagline-title">Suggested Tagline:</h3>
+                <p id="output-tagline" class="text-lg text-gray-700 dark:text-gray-300">Loading...</p>
+            </div>
+            <div class="mb-4">
+                <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200" id="concept-title">Logo Concept:</h3>
+                <p id="output-concept" class="text-gray-700 dark:text-gray-300">Loading...</p>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200" id="interpreted-lorem-title">Interpreted Text:</h3>
+                <p id="output-lorem-ipsum" class="text-gray-700 dark:text-gray-300">Loading...</p>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7bQ8A+Y3b8hM9aU1" crossorigin="anonymous"></script>
+    <footer class="w-full bg-gray-900 text-white text-center p-4 rounded-t-xl">
+        <p id="footer-text" class="text-sm">© 2024 AI Logo Generator. Designed by LYHUY.</p>
+    </footer>
+
     <script>
-        // Custom Alert Function
-        function showAlert(message, type = 'info', duration = 3000) {
-            const container = document.getElementById('custom-alert-container');
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `alert alert-${type} alert-custom`;
-            alertDiv.role = 'alert';
-            alertDiv.innerText = message;
-            container.appendChild(alertDiv);
+        // Global variables for Firebase configuration and app ID
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
 
-            // Trigger reflow to enable CSS transition
-            void alertDiv.offsetWidth;
-            alertDiv.classList.add('show');
-
-            setTimeout(() => {
-                alertDiv.classList.remove('show');
-                alertDiv.addEventListener('transitionend', () => alertDiv.remove(), { once: true });
-            }, duration);
-        }
-
-        const companyNameInput = document.getElementById('companyName');
-        const designCharactersInput = document.getElementById('designCharacters');
-        const taglineInput = document.getElementById('tagline');
-        const loremIpsumInput = document.getElementById('loremIpsum');
-        const imageUploadInput = document.getElementById('imageUpload');
-        const imagePreview = document.getElementById('imagePreview');
-        const imageUploadPlaceholder = document.getElementById('imageUploadPlaceholder');
-        const generateLogoBtn = document.getElementById('generateLogoBtn');
-        const generatedLogo = document.getElementById('generatedLogo');
-        const loadingSpinner = document.getElementById('loadingSpinner');
-        const downloadLogoBtn = document.getElementById('downloadLogoBtn');
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        const languageDropdown = document.getElementById('languageDropdown');
-        const currentLanguageText = document.getElementById('current-language-text');
-        const htmlElement = document.documentElement;
-
-        let uploadedImageData = null; // Stores base64 image data
-
-        // --- Language Management ---
+        // Language translations
         const translations = {
             en: {
-                appName: "AI Business Logo Generator",
-                generateYourLogo: "Generate Your Business Logo",
-                companyNameLabel: "Business Name:",
-                designCharactersLabel: "Core Concept / Design Elements:",
-                taglineLabel: "Tagline / Slogan (Optional):",
-                loremIpsumLabel: "Business Description / Specific Requirements:",
-                clickOrDrag: "Click or drag an image here",
-                generateLogoBtn: "Generate Business Logo",
-                generatedLogoLabel: "Generated Logo:",
-                downloadLogoBtn: "Download Logo",
-                generatingLogo: "Generating business logo...",
-                logoGeneratedSuccess: "Business logo generated successfully!",
-                logoGenerationFailed: "Failed to generate logo. Please try again.",
-                noInputError: "Please provide at least a Business Name or Core Concept / Design Elements.",
-                imageSizeTooLarge: "Image size is too large (max 4MB).",
-                invalidImageFile: "Invalid image file."
+                'app-title': 'AI Logo Generator',
+                'switch-lang-text': 'Switch to Khmer',
+                'switch-theme-text': 'Dark Mode',
+                'input-section-title': 'Your Logo Ideas',
+                'label-company-name': 'Full Company Name',
+                'label-characters': 'Character Base for Design',
+                'label-tagline': 'Wrote Placeholder or Conceptual Tagline',
+                'label-lorem-ipsum': 'Contextual Text (e.g., Lorem Ipsum)',
+                'label-image-upload': 'Upload Image for Reference',
+                'image-upload-help': 'Upload an image that inspires your logo\'s style or theme.',
+                'no-image-preview': 'No image selected',
+                'generate-button-text': 'Generate Logo',
+                'output-section-title': 'Your Generated Logo & Concept',
+                'tagline-title': 'Suggested Tagline:',
+                'concept-title': 'Logo Concept:',
+                'interpreted-lorem-title': 'Interpreted Text:',
+                'footer-text': '© 2024 AI Logo Generator. Designed by LYHUY.',
+                'loading-text': 'Generating your logo concept and image...',
+                'error-fetching-concept': 'Error fetching logo concept. Please try again.',
+                'error-generating-logo': 'Error generating logo image. Please try again.'
             },
             km: {
-                appName: "កម្មវិធីបង្កើតរូបសញ្ញាអាជីវកម្ម AI",
-                generateYourLogo: "បង្កើតរូបសញ្ញាអាជីវកម្មរបស់អ្នក",
-                companyNameLabel: "ឈ្មោះអាជីវកម្ម៖",
-                designCharactersLabel: "គំនិតស្នូល / ធាតុរចនា៖",
-                taglineLabel: "ពាក្យស្លោក / បាវចនា (ស្រេចចិត្ត)៖",
-                loremIpsumLabel: "ការពិពណ៌នាអាជីវកម្ម / តម្រូវការជាក់លាក់៖",
-                clickOrDrag: "ចុច ឬអូសរូបភាពនៅទីនេះ",
-                generateLogoBtn: "បង្កើតរូបសញ្ញាអាជីវកម្ម",
-                generatedLogoLabel: "រូបសញ្ញាដែលបានបង្កើត៖",
-                downloadLogoBtn: "ទាញយករូបសញ្ញា",
-                generatingLogo: "កំពុងបង្កើតរូបសញ្ញាអាជីវកម្ម...",
-                logoGeneratedSuccess: "បង្កើតរូបសញ្ញាអាជីវកម្មបានជោគជ័យ!",
-                logoGenerationFailed: "បរាជ័យក្នុងការបង្កើតរូបសញ្ញា។ សូមព្យាយាមម្តងទៀត។",
-                noInputError: "សូមបញ្ចូលឈ្មោះអាជីវកម្ម ឬគំនិតស្នូល / ធាតុរចនាយ៉ាងហោចណាស់មួយ។",
-                imageSizeTooLarge: "ទំហំរូបភាពធំពេក (អតិបរមា 4MB)។",
-                invalidImageFile: "ឯកសាររូបភាពមិនត្រឹមត្រូវ។"
+                'app-title': 'កម្មវិធីបង្កើតឡូហ្គោដោយ AI',
+                'switch-lang-text': 'ប្តូរទៅជាភាសាអង់គ្លេស',
+                'switch-theme-text': 'របៀបងងឹត',
+                'input-section-title': 'គំនិតឡូហ្គោរបស់អ្នក',
+                'label-company-name': 'ឈ្មោះពេញរបស់ក្រុមហ៊ុន',
+                'label-characters': 'មូលដ្ឋានតួអក្សរសម្រាប់ការរចនា',
+                'label-tagline': 'ពាក្យស្លោក ឬគំនិតស្លោក',
+                'label-lorem-ipsum': 'អត្ថបទបរិបទ (ឧ. Lorem Ipsum)',
+                'label-image-upload': 'បង្ហោះរូបភាពសម្រាប់ជាឯកសារយោង',
+                'image-upload-help': 'បង្ហោះរូបភាពដែលបំផុសគំនិតសម្រាប់រចនាប័ទ្ម ឬប្រធានបទឡូហ្គោរបស់អ្នក។',
+                'no-image-preview': 'មិនមានរូបភាពត្រូវបានជ្រើសរើស',
+                'generate-button-text': 'បង្កើតឡូហ្គោ',
+                'output-section-title': 'ឡូហ្គោ និងគំនិតដែលបានបង្កើតរបស់អ្នក',
+                'tagline-title': 'ពាក្យស្លោកដែលបានស្នើ៖',
+                'concept-title': 'គំនិតឡូហ្គោ៖',
+                'interpreted-lorem-title': 'អត្ថបទដែលបានបកស្រាយ៖',
+                'footer-text': '© 2024 កម្មវិធីបង្កើតឡូហ្គោដោយ AI។ រចនាដោយ LYHUY។',
+                'loading-text': 'កំពុងបង្កើតគំនិត និងរូបភាពឡូហ្គោរបស់អ្នក...',
+                'error-fetching-concept': 'មានបញ្ហាក្នុងការទាញយកគំនិតឡូហ្គោ។ សូមព្យាយាមម្តងទៀត។',
+                'error-generating-logo': 'មានបញ្ហាក្នុងការបង្កើតរូបភាពឡូហ្គោ។ សូមព្យាយាមម្តងទៀត។'
             }
         };
 
-        let currentLanguage = 'en';
+        let currentLang = 'en'; // Default language
 
-        function setLanguage(lang) {
-            currentLanguage = lang;
-            currentLanguageText.innerText = lang.toUpperCase(); // Update language display in dropdown
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    element.innerText = translations[lang][key];
+        // Function to update text based on current language and icons
+        function updateContent() {
+            Object.keys(translations[currentLang]).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        if (['company-name', 'characters', 'tagline', 'lorem-ipsum'].includes(element.id)) {
+                             element.placeholder = translations[currentLang][id];
+                        }
+                    } else if (element.id === 'loading-message') { // Handle loading message separately
+                        element.innerText = translations[currentLang]['loading-text'];
+                    } else {
+                        element.innerText = translations[currentLang][id];
+                    }
                 }
             });
-            // Update placeholders manually for inputs/textareas
-            companyNameInput.placeholder = translations[lang].companyNameInputPlaceholder || "e.g., Global Innovations Corp";
-            designCharactersInput.placeholder = translations[lang].designCharactersInputPlaceholder || "e.g., growth, interconnected, abstract, globe, leaf";
-            taglineInput.placeholder = translations[lang].taglineInputPlaceholder || "e.g., Empowering Tomorrow's Solutions";
-            loremIpsumInput.placeholder = translations[lang].loremIpsumInputPlaceholder || "e.g., Describe your industry, target audience, brand values, or any specific visual elements (e.g., 'tech company focusing on sustainable energy', 'luxury brand with a modern, clean aesthetic').";
-            imageUploadPlaceholder.querySelector('span').innerText = translations[lang].clickOrDrag;
-
-            // Update placeholder for generated logo if it's the initial placeholder image
-            if (generatedLogo.src.includes('placehold.co')) {
-                const placeholderText = encodeURIComponent(translations[lang].generatedLogoPlaceholder || 'Your Logo Here');
-                generatedLogo.src = `https://placehold.co/400x250/e0e0e0/555555?text=${placeholderText}`;
+            // Update the screen reader text for language and theme toggles
+            document.getElementById('switch-lang-text').innerText = translations[currentLang]['switch-lang-text'];
+            const themeText = document.getElementById('switch-theme-text');
+            if (document.body.classList.contains('dark')) {
+                themeText.innerText = 'Light Mode';
+            } else {
+                themeText.innerText = 'Dark Mode';
             }
         }
 
-        // Initialize language
-        setLanguage(currentLanguage);
 
-        // Language dropdown event listeners
-        document.querySelectorAll('.dropdown-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const lang = e.target.getAttribute('data-lang');
-                setLanguage(lang);
-            });
+        // Event listener for language toggle button
+        document.getElementById('lang-toggle').addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'km' : 'en';
+            updateContent();
         });
 
-        // --- Theme Management ---
-        function toggleTheme() {
-            if (htmlElement.getAttribute('data-bs-theme') === 'dark') {
-                htmlElement.setAttribute('data-bs-theme', 'light');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
+        // Event listener for theme toggle button
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const themeIcon = document.getElementById('theme-icon');
+            if (document.body.classList.contains('dark')) {
+                // Change to Sun icon when in Dark Mode (to indicate switching to Light)
+                themeIcon.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                `;
             } else {
-                htmlElement.setAttribute('data-bs-theme', 'dark');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
+                // Change to Moon icon when in Light Mode (to indicate switching to Dark)
+                themeIcon.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                `;
             }
-        }
+             // Update switch language button text explicitly
+            document.getElementById('switch-lang-text').innerText = translations[currentLang]['switch-lang-text'];
+            // Update theme button text explicitly (for screen readers)
+            const themeText = document.getElementById('switch-theme-text');
+            if (document.body.classList.contains('dark')) {
+                themeText.innerText = 'Light Mode';
+            } else {
+                themeText.innerText = 'Dark Mode';
+            }
+        });
 
-        themeToggleBtn.addEventListener('click', toggleTheme);
+        // Image upload preview
+        const imageUpload = document.getElementById('image-upload');
+        const imagePreviewContainer = document.getElementById('image-preview');
+        const imagePreviewImg = imagePreviewContainer.querySelector('img');
+        const noImagePreviewText = document.getElementById('no-image-preview');
+        let uploadedImageBase64 = null; // To store base64 image data
 
-        // Initialize theme icon based on current theme
-        if (htmlElement.getAttribute('data-bs-theme') === 'dark') {
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
-        } else {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        }
-
-        // --- Image Upload and Preview ---
-        imageUploadInput.addEventListener('change', function(event) {
+        imageUpload.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (file) {
-                if (file.size > 4 * 1024 * 1024) { // Max 4MB
-                    showAlert(translations[currentLanguage].imageSizeTooLarge, 'danger');
-                    imageUploadInput.value = ''; // Clear the input
-                    imagePreview.style.display = 'none';
-                    imageUploadPlaceholder.style.display = 'flex'; // Ensure flex for proper centering
-                    uploadedImageData = null;
-                    return;
-                }
-
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                    imageUploadPlaceholder.style.display = 'none';
-                    // Store only the base64 part for sending to the API
-                    uploadedImageData = e.target.result.split(',')[1];
-                };
-                reader.onerror = function() {
-                    showAlert(translations[currentLanguage].invalidImageFile, 'danger');
-                    imagePreview.style.display = 'none';
-                    imageUploadPlaceholder.style.display = 'flex';
-                    uploadedImageData = null;
+                reader.onload = (e) => {
+                    imagePreviewImg.src = e.target.result;
+                    imagePreviewImg.classList.remove('hidden');
+                    noImagePreviewText.classList.add('hidden');
+                    // Store only the base64 part, removing the data:image/png;base64, prefix
+                    uploadedImageBase64 = e.target.result.split(',')[1];
                 };
                 reader.readAsDataURL(file);
             } else {
-                imagePreview.style.display = 'none';
-                imageUploadPlaceholder.style.display = 'flex';
-                uploadedImageData = null;
+                imagePreviewImg.src = '';
+                imagePreviewImg.classList.add('hidden');
+                noImagePreviewText.classList.remove('hidden');
+                uploadedImageBase64 = null;
             }
         });
 
-        // Drag and drop functionality for image upload
-        const imageUploadWrapper = document.querySelector('.image-upload-wrapper');
-        imageUploadWrapper.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            imageUploadWrapper.style.borderColor = 'var(--apple-blue)';
-            imageUploadWrapper.style.backgroundColor = 'var(--light-bg-secondary)';
-        });
-        imageUploadWrapper.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            imageUploadWrapper.style.borderColor = 'var(--light-border)';
-            imageUploadWrapper.style.backgroundColor = 'var(--light-bg-primary)';
-        });
-        imageUploadWrapper.addEventListener('drop', (e) => {
-            e.preventDefault();
-            imageUploadWrapper.style.borderColor = 'var(--light-border)';
-            imageUploadWrapper.style.backgroundColor = 'var(--light-bg-primary)';
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                imageUploadInput.files = files; // Assign dropped files to input
-                const event = new Event('change');
-                imageUploadInput.dispatchEvent(event); // Trigger change event
-            }
-        });
+        // Generate Logo button click handler
+        document.getElementById('generate-logo').addEventListener('click', async () => {
+            const companyName = document.getElementById('company-name').value;
+            const characters = document.getElementById('characters').value;
+            const tagline = document.getElementById('tagline').value;
+            const loremIpsumText = document.getElementById('lorem-ipsum').value;
 
+            const generateButton = document.getElementById('generate-logo');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const loadingContainer = document.getElementById('loading-container'); // New loading container
+            const generateButtonText = document.getElementById('generate-button-text');
+            const outputSection = document.getElementById('output-section');
+            const outputTagline = document.getElementById('output-tagline');
+            const outputConcept = document.getElementById('output-concept');
+            const outputLoremIpsum = document.getElementById('output-lorem-ipsum');
+            const generatedLogo = document.getElementById('generated-logo');
 
-        // --- Logo Generation Logic ---
-        generateLogoBtn.addEventListener('click', async () => {
-            const companyName = companyNameInput.value.trim();
-            const designCharacters = designCharactersInput.value.trim();
-            const tagline = taglineInput.value.trim();
-            const loremIpsum = loremIpsumInput.value.trim();
-
-            if (!companyName && !designCharacters) {
-                showAlert(translations[currentLanguage].noInputError, 'warning');
-                return;
-            }
-
-            // Construct the prompt for the AI, specifically for business logos
-            let prompt = `Design a high-quality, professional, commercially viable business logo.`;
-            if (companyName) prompt += ` The business name is "${companyName}".`;
-            if (designCharacters) prompt += ` The core concept or design elements are "${designCharacters}".`;
-            if (tagline) prompt += ` The tagline is "${tagline}".`;
-            if (loremIpsum) prompt += ` Business description and specific requirements: ${loremIpsum}.`;
-            prompt += ` The logo should be clean, modern, scalable, and suitable for professional branding across various media (web, print, merchandise). Focus on a minimalist, sleek design with subtle use of color, high contrast, and clean lines, similar to Apple's aesthetic, ensuring it conveys trustworthiness and innovation. Generate a single, distinct logo image.`;
-
-
-            // Prepare payload for Gemini API
-            const contents = [];
-            contents.push({ role: "user", parts: [{ text: prompt }] });
-
-            if (uploadedImageData) {
-                contents[0].parts.push({
-                    inlineData: {
-                        mimeType: "image/png", // Assuming PNG, but could be dynamic if needed
-                        data: uploadedImageData
-                    }
-                });
-            }
-
-            const payload = {
-                instances: {
-                    prompt: prompt
-                },
-                parameters: {
-                    sampleCount: 1
-                }
-            };
-
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // IMPORTANT: REPLACE 'YOUR_API_KEY_HERE' WITH YOUR ACTUAL GOOGLE CLOUD API KEY
-            // You can get one from Google Cloud Console -> APIs & Services -> Credentials
-            // Remember to restrict its usage to the Generative Language API for security.
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
-
-            // Check if the API key is still the placeholder
-            if (apiKey === "YOUR_API_KEY_HERE" || apiKey === "") {
-                showAlert("Please replace 'YOUR_API_KEY_HERE' in the code with your actual Google Cloud API Key to enable logo generation when hosted externally.", "danger", 8000);
-                return; // Stop execution if API key is not set
-            }
-
-            loadingSpinner.classList.add('active');
-            generateLogoBtn.disabled = true;
-            downloadLogoBtn.disabled = true;
-            generatedLogo.style.opacity = '0.5'; // Dim logo during generation
+            // Show loading state
+            generateButton.disabled = true;
+            loadingSpinner.classList.remove('hidden');
+            loadingContainer.classList.remove('hidden'); // Show the loading container
+            generateButtonText.innerText = translations[currentLang]['loading-text']; // This might be overridden by the general updateContent, which is fine
+            outputSection.classList.add('hidden'); // Hide previous results
+            outputTagline.innerText = translations[currentLang]['loading-text'];
+            outputConcept.innerText = translations[currentLang]['loading-text'];
+            outputLoremIpsum.innerText = translations[currentLang]['loading-text'];
+            generatedLogo.src = "https://placehold.co/200x200/cccccc/ffffff?text=Loading..."; // Placeholder for loading image
 
             try {
-                const response = await fetch(apiUrl, {
+                // Step 1: Call gemini-2.0-flash for conceptualization and detailed text output
+                let chatHistory = [];
+                let parts = [{
+                    text: `Given the company name '${companyName}', character base '${characters}', and a conceptual tagline '${tagline}' (if provided), and contextual text '${loremIpsumText}', generate:
+                    1. A suggested concise and impactful tagline.
+                    2. A creative interpretation of the company's purpose or vision, drawing inspiration from the provided characters and tagline.
+                    3. If any contextual text (lorem ipsum) is provided, interpret its potential meaning or relevance in the context of the company, and rephrase it into a meaningful paragraph.
+                    4. Based on these inputs, describe a conceptual logo design suitable for an image generation model. Focus on the core visual ideas, color palettes (using modern Material Design 3 inspired colors like deep purples, teals, and soft blues, avoiding flat primary colors), and overall feeling, ensuring it's a vector-style, modern, minimalist, abstract design with a transparent background. The design should feel dynamic and expressive, incorporating subtle gradients or fluid shapes where appropriate.
+                    
+                    Please provide the output in JSON format with the following keys:
+                    {
+                        "suggestedTagline": "...",
+                        "companyConcept": "...",
+                        "interpretedLorem": "...",
+                        "logoImagePrompt": "..."
+                    }`
+                }];
+
+                if (uploadedImageBase64) {
+                    parts.push({
+                        inlineData: {
+                            mimeType: imageUpload.files[0].type,
+                            data: uploadedImageBase64
+                        }
+                    });
+                }
+
+                chatHistory.push({ role: "user", parts: parts });
+
+                const payload = {
+                    contents: chatHistory,
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "suggestedTagline": { "type": "STRING" },
+                                "companyConcept": { "type": "STRING" },
+                                "interpretedLorem": { "type": "STRING" },
+                                "logoImagePrompt": { "type": "STRING" }
+                            },
+                            "propertyOrdering": ["suggestedTagline", "companyConcept", "interpretedLorem", "logoImagePrompt"]
+                        }
+                    }
+                };
+
+                const apiKey = ""; // Canvas will automatically provide this in runtime
+                const apiUrlText = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const textResponse = await fetch(apiUrlText, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    console.error("API response error:", errorData);
-                    let errorMessage = translations[currentLanguage].logoGenerationFailed;
-                    if (errorData.error && errorData.error.message) {
-                        errorMessage += ` Error: ${errorData.error.message}`;
-                    }
-                    showAlert(errorMessage, 'danger');
-                    return;
-                }
+                const textResult = await textResponse.json();
+                let conceptData;
 
-                const result = await response.json();
-
-                if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
-                    const imageUrl = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
-                    generatedLogo.src = imageUrl;
-                    downloadLogoBtn.disabled = false;
-                    showAlert(translations[currentLanguage].logoGeneratedSuccess, 'success');
+                if (textResult.candidates && textResult.candidates.length > 0 &&
+                    textResult.candidates[0].content && textResult.candidates[0].content.parts &&
+                    textResult.candidates[0].content.parts.length > 0) {
+                    const jsonString = textResult.candidates[0].content.parts[0].text;
+                    conceptData = JSON.parse(jsonString);
+                    outputTagline.innerText = conceptData.suggestedTagline || 'N/A';
+                    outputConcept.innerText = conceptData.companyConcept || 'N/A';
+                    outputLoremIpsum.innerText = conceptData.interpretedLorem || 'N/A';
                 } else {
-                    console.error("API response structure unexpected:", result);
-                    showAlert(translations[currentLanguage].logoGenerationFailed, 'danger');
+                    console.error("Unexpected text generation response structure:", textResult);
+                    outputTagline.innerText = translations[currentLang]['error-fetching-concept'];
+                    outputConcept.innerText = translations[currentLang]['error-fetching-concept'];
+                    outputLoremIpsum.innerText = translations[currentLang]['error-fetching-concept'];
+                    generatedLogo.src = "https://placehold.co/200x200/ff0000/ffffff?text=Error";
+                    return; // Stop if text generation failed
                 }
+
+                // Step 2: Use imagen-3.0-generate-002 with the logoImagePrompt from Step 1
+                const imagePayload = {
+                    instances: {
+                        prompt: conceptData.logoImagePrompt
+                    },
+                    parameters: {
+                        "sampleCount": 1
+                    }
+                };
+
+                const apiUrlImage = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+
+                const imageResponse = await fetch(apiUrlImage, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(imagePayload)
+                });
+
+                const imageResult = await imageResponse.json();
+
+                if (imageResult.predictions && imageResult.predictions.length > 0 && imageResult.predictions[0].bytesBase64Encoded) {
+                    const imageUrl = `data:image/png;base64,${imageResult.predictions[0].bytesBase64Encoded}`;
+                    generatedLogo.src = imageUrl;
+                } else {
+                    console.error("Unexpected image generation response structure:", imageResult);
+                    generatedLogo.src = "https://placehold.co/200x200/ff0000/ffffff?text=Error";
+                }
+
             } catch (error) {
-                console.error("Error generating logo:", error);
-                showAlert(translations[currentLanguage].logoGenerationFailed + ` (${error.message})`, 'danger');
+                console.error("Error during logo generation:", error);
+                outputTagline.innerText = translations[currentLang]['error-fetching-concept'];
+                outputConcept.innerText = translations[currentLang]['error-fetching-concept'];
+                outputLoremIpsum.innerText = translations[currentLang]['error-fetching-concept'];
+                generatedLogo.src = "https://placehold.co/200x200/ff0000/ffffff?text=Error";
             } finally {
-                loadingSpinner.classList.remove('active');
-                generateLogoBtn.disabled = false;
-                generatedLogo.style.opacity = '1'; // Restore opacity
+                // Hide loading state
+                generateButton.disabled = false;
+                loadingSpinner.classList.add('hidden');
+                loadingContainer.classList.add('hidden'); // Hide the loading container
+                generateButtonText.innerText = translations[currentLang]['generate-button-text'];
+                outputSection.classList.remove('hidden'); // Show results section
             }
         });
 
-        // --- Download Logo Functionality ---
-        downloadLogoBtn.addEventListener('click', () => {
-            const imgUrl = generatedLogo.src;
-            if (imgUrl && !imgUrl.includes('placehold.co')) {
-                const link = document.createElement('a');
-                link.href = imgUrl;
-                link.download = 'generated_business_logo.png';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-        });
-
-        // Initial placeholder text for generated logo if it's the default
-        if (generatedLogo.src.includes('placehold.co')) {
-            const placeholderText = encodeURIComponent(translations[currentLanguage].generatedLogoPlaceholder || 'Your Logo Here');
-            generatedLogo.src = `https://placehold.co/400x250/e0e0e0/555555?text=${placeholderText}`;
-        }
+        // Initialize content on page load
+        window.onload = updateContent;
     </script>
 </body>
 </html>
